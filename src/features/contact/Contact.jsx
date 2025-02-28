@@ -5,7 +5,14 @@ import emailjs from "@emailjs/browser";
 import { useRef } from "react";
 
 function Contact() {
-  const form = useForm({
+  const formData = useRef(null); // Ensure formData is linked properly
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
     defaultValues: {
       name: "",
       email: "",
@@ -14,32 +21,32 @@ function Contact() {
     },
   });
 
-  const formData = useRef();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = form;
+  const sendEmail = (event) => {
+    event.preventDefault(); // Prevent page reload
 
-  const sendEmail = () => {
+    if (!formData.current) {
+      console.error("Form reference is not available.");
+      return;
+    }
+
     emailjs
       .sendForm(
-        `${import.meta.env.VITE_SERVICE_ID}`,
-        `${import.meta.env.VITE_TEMPLATE_ID}`,
-        formData.current,
-        `${import.meta.env.VITE_EMAILJS_KEY}`,
+        import.meta.env.VITE_SERVICE_ID, // Ensure this is correctly set in .env
+        import.meta.env.VITE_TEMPLATE_ID,
+        formData.current, // Form reference
+        import.meta.env.VITE_EMAILJS_KEY
       )
       .then(
         (result) => {
-          console.log(result.text);
+          console.log("✅ Email sent successfully:", result.text);
+          alert("Mail Sent! 🎉 Thank you for contacting.");
+          reset(); // Clear form after submission
         },
         (error) => {
-          console.log(error.text);
-        },
+          console.error("❌ Error sending email:", error.text);
+          alert("Failed to send email. Please try again.");
+        }
       );
-    reset();
-    alert("Mail Sent😁.Thankyou for Contacting.");
   };
 
   return (
@@ -47,125 +54,72 @@ function Contact() {
       <Helmet>
         <title>Manav Shete | Contact</title>
       </Helmet>
-      <div className="flex w-full flex-col gap-x-8 gap-y-8 bg-mainBg px-8 pt-5 xl:flex-row xl:divide-x-2 xl:divide-accentColor">
-        <div className="xl:w-1/2 ">
+      <div className="flex flex-col xl:flex-row w-full gap-6 px-6 pt-4 bg-gradient-to-b from-gray-900 to-gray-800 text-white min-h-screen">
+        {/* Left Side - Socials */}
+        <div className="xl:w-1/2">
           <ContactSocials />
         </div>
-        <div className="flex flex-col xl:w-1/2  xl:pl-10">
-          <p className="text-3xl text-textColor">Or Fill Out This Form</p>
+
+        {/* Right Side - Form */}
+        <div className="xl:w-1/2 xl:pl-8 flex flex-col">
+          <h2 className="text-2xl font-medium text-center xl:text-left">
+            Contact Me
+          </h2>
+          <p className="mt-1 text-sm text-gray-400 text-center xl:text-left">
+            Fill out the form below to get in touch.
+          </p>
+
           <form
             ref={formData}
-            className="space-y-4 pt-5 text-textColor"
-            onSubmit={handleSubmit(sendEmail)}
+            className="mt-4 space-y-4"
+            onSubmit={sendEmail} // Handle submit manually
           >
-            <div className="flex flex-col  ">
-              <label
-                className="text-base font-semibold  md:text-lg"
-                htmlFor="name"
-              >
-                NAME
-              </label>
-              <input
-                className="input "
-                name="name"
-                type="text"
-                id="name"
-                {...register("name", {
-                  required: { value: true, message: "Name is required" },
-                })}
-              />
-              <p className="error text-sm text-red-600">
-                {errors.name?.message}{" "}
-              </p>
-            </div>
+            {/* Input Fields */}
+            {[{ label: "Name", name: "name", type: "text" },
+              { label: "Email", name: "email", type: "email" },
+              { label: "Subject", name: "subject", type: "text" },
+            ].map((field, index) => (
+              <div key={index} className="flex flex-col">
+                <label className="text-sm font-medium" htmlFor={field.name}>
+                  {field.label}
+                </label>
+                <input
+                  className="mt-1 w-full p-2 text-sm bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-accentColor"
+                  id={field.name}
+                  name={field.name} // Add name attribute for EmailJS
+                  type={field.type}
+                  {...register(field.name, {
+                    required: `${field.label} is required`,
+                  })}
+                />
+                <p className="text-xs text-red-500 mt-1">{errors[field.name]?.message}</p>
+              </div>
+            ))}
+
+            {/* Message Textarea */}
             <div className="flex flex-col">
-              <label
-                className="text-base font-semibold md:text-lg"
-                htmlFor="email"
-              >
-                EMAIL
-              </label>
-              <input
-                className="input"
-                type="email"
-                id="email"
-                name="email"
-                {...register("email", {
-                  pattern: {
-                    value:
-                      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                    message: "Invalid email format",
-                  },
-                  required: {
-                    value: true,
-                    message: "Email is required",
-                  },
-                })}
-              />
-              <p className="error text-sm text-red-600">
-                {errors.email?.message}{" "}
-              </p>
-            </div>
-            <div className="flex flex-col">
-              <label
-                className="text-base font-semibold md:text-lg"
-                htmlFor="subject"
-              >
-                SUBJECT
-              </label>
-              <input
-                className="input"
-                type="text"
-                name="subject"
-                id="subject"
-                {...register("subject", {
-                  required: {
-                    value: true,
-                    message: "Subject is required",
-                  },
-                })}
-              />
-              <p className="error text-sm text-red-600">
-                {errors.subject?.message}{" "}
-              </p>
-            </div>
-            <div className="flex flex-col">
-              <label
-                className="text-base font-semibold md:text-lg"
-                htmlFor="textmessage"
-              >
-                MESSAGE
+              <label className="text-sm font-medium" htmlFor="textmessage">
+                Message
               </label>
               <textarea
-                className="w-full  bg-articleBg p-2  text-xl focus:border-accentColor focus:outline-none focus:ring-1 focus:ring-accentColor"
+                className="mt-1 w-full p-2 text-sm bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:border-accentColor"
                 id="textmessage"
-                name="textmessage"
-                cols="30"
-                rows="6"
+                name="textmessage" // Add name attribute
+                rows="4"
                 {...register("textmessage", {
-                  required: {
-                    value: true,
-                    message: "Message is required",
-                  },
-                  validate: {
-                    isLessThanfiveChar: (fieldValue) => {
-                      return (
-                        fieldValue.length > 4 ||
-                        "Should be of minimum 5 characters"
-                      );
-                    },
-                  },
+                  required: "Message is required",
+                  minLength: { value: 5, message: "Should be at least 5 characters" },
                 })}
               ></textarea>
-              <p className="error text-sm text-red-600">
-                {errors.textmessage?.message}{" "}
-              </p>
+              <p className="text-xs text-red-500 mt-1">{errors.textmessage?.message}</p>
             </div>
+
+            {/* Submit Button */}
             <button
               type="submit"
-              className=" bg-accentColor px-6 py-1 text-lg font-medium text-black"
+              className="mt-3 bg-accentColor text-black px-5 py-2 rounded-md text-sm font-medium transition hover:bg-opacity-80"
             >
-              Submit
+              Send Message
             </button>
           </form>
         </div>

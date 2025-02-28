@@ -5,6 +5,17 @@ import css_icon from "../../assets/icons/css_icon.svg";
 import js_icon from "../../assets/icons/js_icon.svg";
 import tailwind_icon from "../../assets/icons/tw-icon.svg";
 import python_icon from "../../assets/icons/python-5.svg";
+import github_icon from "../../assets/icons/github_icon.svg";
+import java from "../../assets/icons/java.svg";
+import docker from "../../assets/icons/docker.svg";
+import jenkins from "../../assets/icons/jenkins-original.svg";
+import postman from "../../assets/icons/postman.svg";
+import nodejs from "../../assets/icons/node-js.svg";
+import aws from "../../assets/icons/aws.svg";
+import atlas from "../../assets/icons/mongodb-original.svg";
+import kub from "../../assets/icons/kubernetes.svg";
+import socket from "../../assets/icons/socket.png";
+
 function About() {
   const techStack = [
     html_icon,
@@ -12,76 +23,103 @@ function About() {
     js_icon,
     react_icon,
     tailwind_icon,
+    atlas,
+    nodejs,
+    socket,
     python_icon,
+    java,
+    postman,
+    github_icon,
+    docker,
+    jenkins,
+    aws,
+    kub,
   ];
 
   return (
     <HelmetProvider>
       <Helmet>
-        <title>Manav Shete | About</title>
+        <title>Livingston | About</title>
       </Helmet>
-      <div className=" flex flex-col  items-center justify-center gap-y-4 p-8 text-textColor xl:gap-y-8 ">
-        <div className="flex flex-col items-center gap-x-48 xl:flex-row">
-          <div className=" xl:order-2">
-            <div className=" box border-4 border-accentColor xl:h-[300px] xl:w-[300px] "></div>
+
+      <div className="flex flex-col items-center justify-center px-8 py-12 text-textColor">
+        {/* Header Section */}
+        <div className="flex flex-col items-center gap-y-8 xl:flex-row xl:items-center xl:gap-x-16">
+          {/* Profile Image */}
+          <div className="xl:order-2">
+            <img
+              src="profile.jpg"
+              alt="Profile"
+              className="h-[250px] w-[250px] rounded-lg border-4 border-accentColor object-cover xl:h-[300px] xl:w-[300px]"
+            />
           </div>
-          <div>
-            <h1 className="text-center text-3xl font-extrabold text-white xl:text-start xl:text-6xl">
-              Front-End <br /> React Developer
+
+          {/* Name & Title */}
+          <div className="text-center xl:text-left">
+            <h1 className="text-3xl font-bold leading-snug text-white xl:text-5xl">
+              Full-Stack <br />& DevOps Engineer
             </h1>
-            <h2 className="text-xl max-sm:hidden">
-              Hi, I'm Manav Shete. A passionate Front-end React Developer <br />{" "}
-              based in Mumbai,India. 📍
-            </h2>
-          </div>
-        </div>
-        <div className="xl:flex xl:gap-x-24 ">
-          <div className="order-1 space-y-4 text-center xl:w-1/2 ">
-            <h2 className="text-2xl font-semibold text-accentColor xl:text-3xl">
-              About me:
-            </h2>
-            <p className="text-lg font-medium leading-tight text-slate-400 xl:text-xl">
-              As a Junior Front-End Developer, I possess an impressive arsenal
-              of skills in HTML, CSS, JavaScript, React and Tailwind. I excel in
-              designing and maintaining responsive websites that offer a smooth
-              user experience. I am also a team player who thrives in
-              collaborating with cross-functional teams to produce outstanding
-              web applications.
+            <p className="mt-3 text-lg text-gray-300 xl:text-xl">
+              Hi, I'm Livingston. A passionate Full-Stack Developer & DevOps
+              Engineer <br />
+              Tackles problems, innovates solutions ✨
             </p>
           </div>
-          <div className=" xl:w-1/2">
-            <h3 className=" my-4 text-center text-lg font-semibold text-accentColor underline-offset-4 max-sm:underline xl:text-3xl ">
-              Tech Stack{" "}
-            </h3>
-            <div className="flex items-center justify-center gap-5 max-sm:grid max-sm:grid-cols-3">
-              {techStack.map((item, i) => {
-                return (
-                  <img
-                    className=" h-14 w-14 cursor-pointer rounded-full p-2  shadow-md  shadow-accentColor "
-                    key={i}
-                    src={item}
-                    alt="tech-stack"
-                  />
-                );
-              })}
-            </div>
+        </div>
+
+        {/* About Me Section */}
+        <div className="mt-12 max-w-4xl text-center xl:text-left">
+          <h2 className="text-3xl font-semibold text-accentColor xl:text-4xl">
+            About Me
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed text-gray-400 xl:text-xl">
+            I am a <strong>Full-Stack Developer & DevOps Engineer</strong> with expertise in
+            <strong> building scalable web applications and automating deployments</strong>.
+            Skilled in <strong>React, Node.js, Express, MongoDB, Docker, Kubernetes, 
+            Terraform, CI/CD pipelines, and AWS</strong>, I specialize in delivering 
+            <strong>efficient and optimized solutions</strong>.
+            <br />
+            <br />
+            Beyond coding, I excel in <strong>team collaboration, project management, 
+            and communication</strong>, ensuring smooth workflows and successful 
+            project execution. Passionate about <strong>innovation and automation</strong>, I
+            strive to contribute impactful solutions while continuously
+            advancing in technology.
+          </p>
+        </div>
+
+        {/* Tech Stack Section */}
+        <div className="mt-12 w-full max-w-4xl">
+          <h3 className="text-center text-2xl font-semibold text-accentColor underline underline-offset-4 xl:text-3xl">
+            Tech Stack
+          </h3>
+
+          {/* Icons Grid (Centered Properly) */}
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 place-items-center">
+            {techStack.map((item, i) => (
+              <img
+                key={i}
+                src={item}
+                alt="tech-stack"
+                className="h-16 w-16 rounded-full bg-gray-800 p-3 shadow-lg transition-all hover:scale-110 hover:shadow-xl"
+              />
+            ))}
           </div>
+        </div>
+
+        {/* Download Resume Button */}
+        <div className="mt-12 text-center">
+          <a
+            href="Resume.pdf" // Adjust the path if needed
+            download="Resume.pdf"
+            className="inline-block px-6 py-3 text-white bg-accentColor rounded-lg shadow-lg hover:bg-accentColorDark transition-all"
+          >
+            Download Resume
+          </a>
         </div>
       </div>
     </HelmetProvider>
   );
 }
 
-{
-  /* <p className="px-8 text-lg font-medium  md:text-xl">
-&lt;p&gt; As a Junior Front-End Developer, I possess an impressive
-arsenal of skills in HTML, CSS, JavaScript, React and Tailwind. I
-excel in designing and maintaining responsive websites that offer a
-smooth user experience. My expertise lies in crafting dynamic,
-engaging interfaces through writing clean and optimized code and
-utilizing cutting-edge development tools and techniques. I am also a
-team player who thrives in collaborating with cross-functional teams
-to produce outstanding web applications. &lt;/p&gt;
-</p> */
-}
 export default About;

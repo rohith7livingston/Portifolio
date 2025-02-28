@@ -1,78 +1,122 @@
-import RepoCard from "./RepoCard";
+import { useEffect, useState } from "react";
 import ActivityCalendar from "react-github-calendar";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { getUser } from "../../services/apiGithub";
 import { useLoaderData } from "react-router";
 
+// Dynamic Profile Section
+function ProfileSection({ avatar, name, bio, stats, profileLink, calendar, theme }) {
+  return (
+    <div className="space-y-4 bg-articleBg p-4 rounded-lg shadow-lg">
+      {/* Profile Info */}
+      <div className="flex items-center gap-x-4">
+        <img width={60} height={60} className="rounded-full" src={avatar} alt="profile" />
+        <div>
+          <h2 className="text-lg font-medium text-textColor">
+            <a href={profileLink} target="_blank" rel="noopener noreferrer">{name}</a>
+          </h2>
+          <p className="text-sm text-gray-400">{bio}</p>
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="flex justify-between text-textColor">
+        {stats.map((stat, index) => (
+          <div key={index} className="text-center">
+            <h3 className="text-lg font-semibold">{stat.value}</h3>
+            <p className="text-sm text-gray-400">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Contribution Calendar */}
+      {calendar && (
+        <div className="h-full w-full text-textColor">
+          <ActivityCalendar username={calendar} fontSize={14} theme={theme} hideColorLegend hideMonthLabels />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Github() {
   const [user, repos] = useLoaderData();
-  const repoInfo = repos.filter((r) => r.stargazers_count > 0);
+  const [leetcodeData, setLeetcodeData] = useState(null);
+
   const theme = {
     dark: ["#161B22", "#0e4429", "#006d32", "#26a641", "#39d353"],
   };
 
+  // Fetch LeetCode data (You can replace with static values here)
+  useEffect(() => {
+    fetch("https://leetcode-stats-api.herokuapp.com/livingstondasi") // Replace with correct API if necessary
+      .then((res) => res.json())
+      .then((data) => setLeetcodeData(data))
+      .catch((err) => {
+        console.error("Error fetching LeetCode data: ", err);
+        setLeetcodeData({
+          totalSolved: "N/A",
+          streak: "N/A",
+          contestRating: "N/A",
+        });
+      });
+  }, []);
+
+  // Fallback data for GitHub if user data not found
+  const fallbackUser = {
+    avatar_url: "https://via.placeholder.com/150",
+    login: "rohith7livingston",
+    public_repos: 20,
+  };
+
+  // Static LeetCode Data
+  const staticLeetcode = {
+    totalSolved: "130",
+    streak: "12 days",
+    contestRating: "1400",
+  };
+
+  // Filter starred GitHub repositories
+  const repoInfo = repos.filter((r) => r.stargazers_count > 0);
+
   return (
     <HelmetProvider>
       <Helmet>
-        <title>Manav Shete | Github</title>
+        <title>Livingston | Coding Profiles</title>
       </Helmet>
       <div className="space-y-8 bg-mainBg p-4 md:p-8">
-        <div className="flex h-24 max-w-full items-center justify-center gap-x-5 divide-x-2 divide-accentColor  rounded-lg bg-articleBg">
-          <div className="flex items-center justify-center gap-x-2 divide-x-2  divide-accentColor ">
-            <span>
-              <img
-                width={60}
-                height={60}
-                className="  rounded-full"
-                src={user ? user.avatar_url : "Not found"}
-                alt=""
-              />
-            </span>
-            <h2 className="pl-2 text-lg font-medium text-textColor   md:text-2xl">
-              {user.login}
-            </h2>
-          </div>
-          <div className="pl-2">
-            <h2 className=" text-lg  font-medium text-textColor md:text-2xl">
-              {user ? user.public_repos : 20} Repos
-            </h2>
-          </div>
-          <div className="hidden pl-2 text-textColor   md:block ">
-            <h2 className="md:text-2xl">
-              {user ? user.bio : "I love writing frontend."}
-            </h2>
-          </div>
-        </div>
-        <div className="grid gap-x-5 gap-y-5 md:grid-cols-2 xl:grid-cols-4">
-          {repoInfo &&
-            repoInfo.map((r) => {
-              return (
-                <RepoCard
-                  key={r.id}
-                  name={r.name}
-                  desc={r.description}
-                  url={r.html_url}
-                  homepage={r.homepage}
-                />
-              );
-            })}
-        </div>
-        <div className="h-full w-full  text-textColor">
-          <ActivityCalendar
-            username="manavss"
-            fontSize={17}
-            theme={theme}
-            hideColorLegend
-            hideMonthLabels
-          />
-        </div>
+        {/* GitHub Section */}
+        <ProfileSection
+          avatar={user?.avatar_url || fallbackUser.avatar_url}
+          name={user?.login || fallbackUser.login}
+          bio="I LOVE BUILDING SOLUTIONS."
+          stats={[{ label: "Repos", value: user?.public_repos || fallbackUser.public_repos }]}
+          profileLink={`https://github.com/${user?.login || fallbackUser.login}`}
+          calendar="rohith7livingston"
+          theme={theme}
+        />
+
+        {/* LeetCode Section */}
+        <ProfileSection
+          avatar="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png"
+          name="livingstondasi"
+          bio="Competitive Programmer"
+          stats={[
+            { label: "Problems Solved", value: staticLeetcode.totalSolved },
+            { label: "Streak", value: staticLeetcode.streak },
+            { label: "Rating", value: staticLeetcode.contestRating },
+          ]}
+          profileLink="https://leetcode.com/livingstondasi/"
+          calendar={null} // LeetCode API doesn’t provide calendar data
+        />
       </div>
     </HelmetProvider>
   );
 }
 
+// Loader for GitHub data
 export async function loader() {
-  const github = getUser();
+  const github = await getUser();
   return github;
 }
 

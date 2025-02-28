@@ -2,34 +2,25 @@ function ContactSocials() {
   const socials = [
     {
       social: "email",
-      un: "shetemanav38@gmail.com",
-      href: "mailto:shetemanav38@gmail.com",
+      un: "livingston.dasi@sasi.ac.in",
+      href: "mailto:livingston.dasi@sasi.ac.in",
     },
     {
       social: "github",
-      un: "manavss",
-      href: "https://www.github.com/manavss/",
+      un: "rohith7livingston",
+      href: "https://github.com/rohith7livingston",
     },
     {
       social: "linkedin",
-      un: "manavshete",
-      href: "https://www.linkedin.com/in/manav-shete-aa600a194/",
+      un: "rohith-livingston",
+      href: "www.linkedin.com/in/rohith-livingston",
     },
     {
       social: "instagram",
-      un: "mannaavvv_",
-      href: "https://www.instagram.com/mannaavvv_",
+      un: "living.st7n",
+      href: "https://www.instagram.com/living.st7n/",
     },
-    {
-      social: "frontend mentor",
-      un: "manavss",
-      href: "https://www.frontendmentor.io/profile/manavss",
-    },
-{
-social:"dev.to",
-un:"manavss",
-href:"https://www.dev.to"
-}
+   
   ];
   return (
     <div className="line-container flex flex-col">

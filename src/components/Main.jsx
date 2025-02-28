@@ -8,9 +8,10 @@ import { useTheme } from "../context/ThemeContext";
 function Main() {
   const { theme } = useTheme();
   return (
-    <div className={`theme-${theme}`}>
+    <div className={`theme-${theme} bg-gray-900`}>
       <NavBar />
-      <main className=" flex">
+      <div className="mb-2 bg-gray-900"></div> {/* Ensure background matches */}
+      <main className="flex">
         <SideBar />
         <Explorer />
         <Pages />
