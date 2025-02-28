@@ -6,7 +6,7 @@ function Projects() {
   return (
     <HelmetProvider>
       <Helmet>
-        <title>Manav Shete | Projects</title>
+        <title>Livingston | Projects</title>
       </Helmet>
       <div className="bg-mainBg min-h-screen p-8 flex flex-col items-center">
         <h1 className="pb-5 text-3xl font-semibold text-textColor text-center">

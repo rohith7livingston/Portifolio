@@ -33,7 +33,7 @@ export const project = [
     image: leave,
     tags: ["#Next.js", "#React", "#TailwindCSS", "#TypeScript", "#Express.js", "#REST API", "#MongoDB Atlas"],
     sourceCode: "https://github.com/rohith7livingston/Students-pass.git",
-    demo: "",
+    demo: "https://construction-eight-wheat.vercel.app/",
   },
   {
     title: "Flourish",

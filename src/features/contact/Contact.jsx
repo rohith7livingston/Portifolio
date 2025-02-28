@@ -52,7 +52,7 @@ function Contact() {
   return (
     <HelmetProvider>
       <Helmet>
-        <title>Manav Shete | Contact</title>
+        <title>Livingston | Contact</title>
       </Helmet>
       <div className="flex flex-col xl:flex-row w-full gap-6 px-6 pt-4 bg-gradient-to-b from-gray-900 to-gray-800 text-white min-h-screen">
         {/* Left Side - Socials */}
