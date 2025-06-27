@@ -7,6 +7,7 @@ import leave from '../../assets/images/leave.png'
 import notex from '../../assets/images/notes.png'
 import collab from '../../assets/images/Collab.png'
 import flourish from '../../assets/images/flourish.png'
+// 
 export const project = [
   {
     title: "fraud Detection system",
