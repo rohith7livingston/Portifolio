@@ -5,7 +5,7 @@ import TaskTimer from "../../assets/images/TaskTimer.png";
 import calc from '../../assets/images/calc.png'
 import leave from '../../assets/images/leave.png'
 import notex from '../../assets/images/notes.png'
-import collab from '../../assets/images/Collab.png'
+import collaber from '../../assets/images/Collaber.png'
 import flourish from '../../assets/images/flourish.png'
 // 
 export const project = [
@@ -13,7 +13,7 @@ export const project = [
     title: "fraud Detection system",
     description:
       "Fraud detection system powered by white box machine learning",
-    image: collab,
+    image: collaber,
     tags: ["#React", "#machine-learning", "#Flask" ,"#Node.js", "#Express", "#mySql", "#REST API", "#JWT", "#AWS", "#RealTime"],
     sourceCode: "https://github.com/rohith7livingston/fraud_detection",
     demo: "https://fraud-detection-eta-one.vercel.app/",
@@ -22,7 +22,7 @@ export const project = [
     title: "Collabrative note taking app",
     description:
       "A Collabrative note taking app which increases effiency which also includes productivty AI tools",
-    image: collab,
+    image: collaber,
     tags: ["#React", "#Socket.io", "#Node.js", "#Express", "#MongoDB", "#REST API", "#JWT", "#AWS", "#RealTime"],
     sourceCode: "https://github.com/rohith7livingston/note-it.up.git",
     demo: "https://note-it-up-1.onrender.com/",
